@@ -1,17 +1,17 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: flask-python-welcome-docker
+  name: flask-docker
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'flask-python-welcome-docker:latest'
+      name: 'flask-docker:latest'
   runPolicy: Serial
   source:
     git:
       ref: master
-      uri: 'https://github.com/mmumshad/simple-webapp-flask'
+      uri: 'https://github.com/undefspi/simple-webapp-flask'
     type: Git
   strategy:
     dockerStrategy:
