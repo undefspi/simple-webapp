@@ -1,0 +1,38 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: flask-python-welcome-docker
+  namespace: project-from-scratch
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: flask-python-welcome-docker
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - flask-python-welcome
+        from:
+          kind: ImageStreamTag
+          name: 'flask-python-welcome-docker:latest'
+          namespace: project-from-scratch
+        lastTriggeredImage: >-
+          172.30.1.1:5000/project-from-scratch/flask-python-welcome-docker@sha256:a3052ae061d8b02ab192cdeaf23f748850f0f150bfa67d3faf6e200f714c88f9
+      type: ImageChange
+    - type: ConfigChange
+  latestVersion: 6
+  observedGeneration: 8
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

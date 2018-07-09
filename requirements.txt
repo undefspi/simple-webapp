@@ -1,5 +1,1 @@
 FLASK
-setup_posix
-configparser
-safeconfigparser
-MYSQL

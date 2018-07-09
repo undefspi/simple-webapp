@@ -1,0 +1,32 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: flask-python-welcome-docker
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'flask-python-welcome-docker:latest'
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/mmumshad/simple-webapp-flask'
+    type: Git
+  strategy:
+    dockerStrategy:
+    type: Docker
+  triggers:
+    - imageChange:
+        lastTriggeredImageID: >-
+          docker.io/centos/python-36-centos7@sha256:a9dd9dfa5f7a9f4f0cf39d7e1546661ac6a1ee43c667c9f564b80ab0600c9545
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 38ccfe1c7270109f
+      type: Generic
+    - github:
+        secret: 259d9ff7a282e8ff
+      type: GitHub
+status:
+  lastVersion: 0
